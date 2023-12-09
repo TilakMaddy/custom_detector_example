@@ -1,0 +1,11 @@
+[package]
+name = "custom_detector_example"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+aderyn_core = { path = "/Users/tilakmadichetti/Documents/OpenSource/aderyn/aderyn_core" }
+aderyn = { path = "/Users/tilakmadichetti/Documents/OpenSource/aderyn/aderyn" }
+eyre = "0.6.8"
