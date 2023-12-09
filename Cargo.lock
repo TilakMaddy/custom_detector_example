@@ -5,6 +5,7 @@ version = 3
 [[package]]
 name = "aderyn"
 version = "0.0.7"
+source = "git+https://github.com/TilakMaddy/aderyn?branch=feature/create-custom-detectors#1d522a271a5229b5bee79dbda5418cb6f8e49fc6"
 dependencies = [
  "aderyn_core",
  "clap 4.4.11",
@@ -15,6 +16,7 @@ dependencies = [
 [[package]]
 name = "aderyn_core"
 version = "0.0.7"
+source = "git+https://github.com/TilakMaddy/aderyn?branch=feature/create-custom-detectors#1d522a271a5229b5bee79dbda5418cb6f8e49fc6"
 dependencies = [
  "eyre",
  "rayon",
