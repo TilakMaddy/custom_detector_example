@@ -6,8 +6,5 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-
-aderyn_core = { git = "https://github.com/TilakMaddy/aderyn",  branch = "feature/create-custom-detectors"  }
-aderyn = { git = "https://github.com/TilakMaddy/aderyn",  branch = "feature/create-custom-detectors"  }
-
-eyre = "0.6.8"
+aderyn_driver = { git = "https://github.com/TilakMaddy/aderyn",  branch = "feature/spin-out-detectors"  }
+#aderyn_driver = { path  = "../aderyn/aderyn_driver" }
