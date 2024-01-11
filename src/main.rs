@@ -21,7 +21,8 @@ fn main() {
         root: root_path.to_str().unwrap().to_string(),
         output: "default_analysis_report.md".to_string(),
         exclude: None,
-        no_snippets: false
+        no_snippets: false,
+        scope: None,
     });    
 
     ////////////////////// SUBSCRIBE TO INTERESTED ONES ///////////////////////////
@@ -36,7 +37,8 @@ fn main() {
             root: root_path.to_str().unwrap().to_string(),
             output: "subscription_analysis_report.md".to_string(),
             exclude: None,
-            no_snippets: false
+            no_snippets: false,
+            scope: None,
         },
         subscribe_to  // inject subscriptions here
     );    
@@ -56,7 +58,8 @@ fn main() {
             root: root_path.to_str().unwrap().to_string(),
             output: "custom_subscription_analysis_report.md".to_string(),
             exclude: None,
-            no_snippets: false
+            no_snippets: false,
+            scope: None,
         },
         subscribe_to_hybrid  // inject subscriptions here
     );   
