@@ -4,19 +4,17 @@
  *
  * FAQ
  *
- * > Want to create your own detectors ?
+ * > How to create custom detectors ?
  *      - Run `aderyn_pilot g my_detector_name`
  *      - Code it out in the newly created `aderyn_pilot/detector.rs`
  *      - Write your tests
  *      - Hook up the tests with the desired solidity json out files in `config_tests.rs`
  *      - Run `cargo test`
  *
- * > Want to delete a custom detector ?
+ * > How to delete a custom detector ?
  *      - Run `aderyn_pilot d my_detector_name`
  *
- * NOTE: DO NOT MANUALLY create/delete detectors. Always use `adeyn_pilot` (it keeps track of metadata internally)
- *
- * > Want to analyze a codebase and generate your own report ?
+ * > How to analyze a codebase and generate report ?
  *      - Head over to `runner.rs`. Inside `run()`, define your subscriptions
  *      - you could include your own detectors as well as the core ones
  *      - Run `cargo run` - This will call the run() function
