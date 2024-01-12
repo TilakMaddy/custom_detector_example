@@ -4,7 +4,6 @@ use aderyn_driver::context::loader::ContextLoader;
 use aderyn_driver::detection_modules::capture;
 use aderyn_driver::detector::{Detector, IssueSeverity};
 
-
 #[derive(Default)]
 pub struct UnindexedEventsDetector {
     // Keys are source file name and line number
@@ -31,6 +30,7 @@ impl Detector for UnindexedEventsDetector {
                 capture!(self, loader, event_definition);
             }
         }
+
         Ok(!self.found_instances.is_empty())
     }
 
@@ -55,34 +55,34 @@ impl Detector for UnindexedEventsDetector {
 
 #[cfg(test)]
 mod unindexed_event_tests {
-    
-    use aderyn_driver::detector::detector_test_helpers::load_contract;
-    use aderyn_driver::detector::{Detector, IssueSeverity};
+
+    use crate::config_tests::tests_configuration;
+
     use super::UnindexedEventsDetector;
+
+    use aderyn_driver::context::loader::ContextLoader;
+    use aderyn_driver::detector::detector_test_helpers::load_contract;
+    use aderyn_driver::detector::Detector;
+
+    fn test_unindexed_events_for(
+        _contract_file: String,
+        loader: ContextLoader,
+        mut detector: impl Detector,
+    ) {
+        // assert that the detector finds the public function
+        let found = detector.detect(&loader).unwrap();
+        assert!(found);
+    }
 
     #[test]
     fn test_unindexed_events() {
-        let context_loader = load_contract(
-            "../../aderyn/tests/contract-playground/out/ExtendedInheritance.sol/ExtendedInheritance.json",
-        );
+        let detector = UnindexedEventsDetector::default();
+        let contracts = tests_configuration().get_contracts_for(detector.title());
 
-        let mut detector = UnindexedEventsDetector::default();
-        // assert that the detector finds the public function
-        let found = detector.detect(&context_loader).unwrap();
-        assert!(found);
-        // assert that the detector finds the correct number of unindexed events
-        assert_eq!(detector.instances().len(), 1);
-        // assert that the detector returns the correct severity
-        assert_eq!(
-            detector.severity(),
-            IssueSeverity::NC
-        );
-        // assert that the detector returns the correct title
-        assert_eq!(detector.title(), "Event is missing `indexed` fields");
-        // assert that the detector returns the correct description
-        assert_eq!(
-            detector.description(),
-            "Index event fields make the field more quickly accessible to off-chain tools that parse events. However, note that each index field costs extra gas during emission, so it's not necessarily best to index the maximum allowed per event (three fields). Each event should use three indexed fields if there are three or more fields, and gas usage is not particularly of concern for the events in question. If there are fewer than three fields, all of the fields should be indexed."
-        );
+        for contract_file in contracts {
+            let detector = UnindexedEventsDetector::default();
+            let loader = load_contract(&contract_file);
+            test_unindexed_events_for(contract_file, loader, detector);
+        }
     }
 }

@@ -1,67 +1,53 @@
-// This import is required at minimum
-use aderyn_driver::driver::{self, Args};
+/**
+ *
+ * WELCOME !
+ *
+ * FAQ
+ *
+ * > Want to create your own detectors ?
+ *      - Run `aderyn_pilot g my_detector_name`
+ *      - Code it out in the newly created `aderyn_pilot/detector.rs`
+ *      - Write your tests
+ *      - Hook up the tests with the desired solidity json out files in `config_tests.rs`
+ *      - Run `cargo test`
+ *
+ * NOTE: DO NOT MANUALLY create detectors. Always use `adeyn_pilot` (it keeps track of metadata internally)
+ *
+ * > Want to analyze a codebase and generate your own report ?
+ *      - Head over to `runner.rs`. Inside `run()`, define your subscriptions
+ *      - you could include your own detectors as well as the core ones
+ *      - Run `cargo run` - This will call the run() function
+ *
+ * ADERYN-PILOT // DO NOT TOUCH THIS FILE. - Go to `runner.rs`
+ *
+ * NOTE: These other flags will be used by aderyn_pilot. DO NOT MODIFY any existing
+ * flags. Only if you really know what you are doing feel free to ADD new flags but by
+ * any means DO NOT MODIFY / DELETE existing ones.
+ *
+ */
+use clap::{Parser, Subcommand};
+use custom_detector_example::runner;
 
-// These import are for subscribing to desired detectors
-use aderyn_driver::detector::Detector;
-use aderyn_driver::detection_modules::high::arbitrary_transfer_from::ArbitraryTransferFromDetector;
-use aderyn_driver::detection_modules::low::push_0_opcode::PushZeroOpcodeDetector;
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+pub struct CommandLineArgs {
+    // These are commands that will be invoked by `aderyn_pilot`. Do not manually invoke them
+    #[clap(subcommand, name = "pilot")]
+    pilot: Option<PilotCommand>,
+}
 
-// This import is for the custom detector `unindexed_events.rs`
-use custom_detector_example::unindexed_events::UnindexedEventsDetector;
-
-use std::path::PathBuf;
+#[derive(Debug, Subcommand)]
+enum PilotCommand {}
 
 fn main() {
+    let cmd_args = CommandLineArgs::parse();
 
-    let root_path = PathBuf::from("/Users/tilakmadichetti/Documents/EthereumProjects/simple_storage");
+    if cmd_args.pilot.is_none() {
+        println!("[*] Running bot ");
+        runner::run();
+        return;
+    }
 
-    //////////////////////  DEFAULT (EVERYTHING) //////////////////////////////////
-
-    driver::drive(Args{
-        root: root_path.to_str().unwrap().to_string(),
-        output: "default_analysis_report.md".to_string(),
-        exclude: None,
-        no_snippets: false,
-        scope: None,
-    });    
-
-    ////////////////////// SUBSCRIBE TO INTERESTED ONES ///////////////////////////
-    
-    let subscribe_to: Vec<Box<dyn Detector>> = vec![
-        Box::<ArbitraryTransferFromDetector>::default(),
-        Box::<PushZeroOpcodeDetector>::default(),
-    ];
-    
-    driver::drive_with( // notice this is `drive_with` unlike like above
-        Args{
-            root: root_path.to_str().unwrap().to_string(),
-            output: "subscription_analysis_report.md".to_string(),
-            exclude: None,
-            no_snippets: false,
-            scope: None,
-        },
-        subscribe_to  // inject subscriptions here
-    );    
-
-    //////////////////// HYBRID (CUSTOM ONE + aderyn) /////////////////////////////
-    
-    // There is a file called `unindexed_events` - let's pretend it is the custom written 
-    // detector. Now we want to use that along with   `ArbitraryTransferFromDetector`
-
-    let subscribe_to_hybrid: Vec<Box<dyn Detector>> = vec![
-        Box::<ArbitraryTransferFromDetector>::default(),
-        Box::<UnindexedEventsDetector>::default(),
-    ];
-
-    driver::drive_with( // notice this is `drive_with` unlike like the first ex.
-        Args{
-            root: root_path.to_str().unwrap().to_string(),
-            output: "custom_subscription_analysis_report.md".to_string(),
-            exclude: None,
-            no_snippets: false,
-            scope: None,
-        },
-        subscribe_to_hybrid  // inject subscriptions here
-    );   
-
+    //TODO:
+    //match cmd_args.pilot.unwrap() {}
 }
