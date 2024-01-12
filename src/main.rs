@@ -11,7 +11,10 @@
  *      - Hook up the tests with the desired solidity json out files in `config_tests.rs`
  *      - Run `cargo test`
  *
- * NOTE: DO NOT MANUALLY create detectors. Always use `adeyn_pilot` (it keeps track of metadata internally)
+ * > Want to delete a custom detector ?
+ *      - Run `aderyn_pilot d my_detector_name`
+ *
+ * NOTE: DO NOT MANUALLY create/delete detectors. Always use `adeyn_pilot` (it keeps track of metadata internally)
  *
  * > Want to analyze a codebase and generate your own report ?
  *      - Head over to `runner.rs`. Inside `run()`, define your subscriptions
@@ -26,18 +29,20 @@
  *
  */
 use clap::{Parser, Subcommand};
-use custom_detector_example::runner;
+use custom_detector_example::{bot_brain, runner};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 pub struct CommandLineArgs {
-    // These are commands that will be invoked by `aderyn_pilot`. Do not manually invoke them
+    // These are commands that will be invoked by `aderyn_pilot`.
     #[clap(subcommand, name = "pilot")]
     pilot: Option<PilotCommand>,
 }
 
 #[derive(Debug, Subcommand)]
-enum PilotCommand {}
+enum PilotCommand {
+    RefreshMetadata,
+}
 
 fn main() {
     let cmd_args = CommandLineArgs::parse();
@@ -48,6 +53,7 @@ fn main() {
         return;
     }
 
-    //TODO:
-    //match cmd_args.pilot.unwrap() {}
+    match cmd_args.pilot.unwrap() {
+        PilotCommand::RefreshMetadata => bot_brain::refresh_metadata(),
+    }
 }

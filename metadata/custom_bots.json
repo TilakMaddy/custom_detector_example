@@ -1,0 +1,16 @@
+{
+    "custom_bots": [
+        {
+            "name": "Unspecific Solidity Pragma",
+            "severity": "Low",
+            "description": "Blah Blah Blah",
+            "title": "Unspecific title"
+        },
+        {
+            "name": "Unindexed Events",
+            "severity": "NC",
+            "description": "Blah Blah Blah again",
+            "title": "unindexed events title"
+        }
+    ]
+}
