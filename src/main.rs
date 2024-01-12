@@ -29,7 +29,7 @@
  *
  */
 use clap::{Parser, Subcommand};
-use custom_detector_example::{bot_brain, runner};
+use my_bot::{bot_brain, runner};
 
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]

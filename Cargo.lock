@@ -198,14 +198,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "248e3bacc7dc6baa3b21e405ee045c3047101a49145e7e9eca583ab4c2ca5345"
 
 [[package]]
-name = "custom_detector_example"
-version = "0.1.0"
-dependencies = [
- "aderyn_driver",
- "clap",
-]
-
-[[package]]
 name = "either"
 version = "1.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -301,6 +293,14 @@ name = "memchr"
 version = "2.7.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "523dc4f511e55ab87b694dc30d0f820d60906ef06413f93d4d7a1385599cc149"
+
+[[package]]
+name = "my_bot"
+version = "0.1.0"
+dependencies = [
+ "aderyn_driver",
+ "clap",
+]
 
 [[package]]
 name = "once_cell"
